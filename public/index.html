@@ -1,36 +1,492 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>URL Shortener</title>
+<title>Stylish URL Shortener</title>
 
-    <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+/* BODY BACKGROUND */
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+
+    /* NEW BODY COLOR */
+
+    background:linear-gradient(-45deg,
+    #4b134f,
+    #c94b4b,
+    #2c3e50,
+    #000000);
+
+    background-size:400% 400%;
+
+    animation:gradient 12s ease infinite;
+}
+
+/* BACKGROUND ANIMATION */
+
+@keyframes gradient{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+}
+
+/* BACKGROUND CIRCLES */
+
+.circle1,
+.circle2{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    z-index:0;
+}
+
+.circle1{
+    width:350px;
+    height:350px;
+    top:-100px;
+    left:-100px;
+}
+
+.circle2{
+    width:450px;
+    height:450px;
+    bottom:-150px;
+    right:-120px;
+}
+
+/* CONTAINER */
+
+.container{
+
+    position:relative;
+    z-index:1;
+
+    width:430px;
+
+    padding:35px;
+
+    border-radius:25px;
+
+    /* CONTAINER COLOR */
+
+    background:linear-gradient(135deg,
+    #ffecd2,
+    #fcb69f);
+
+    border:1px solid rgba(255,255,255,0.3);
+
+    box-shadow:0 8px 32px rgba(0,0,0,0.35);
+
+    text-align:center;
+
+    color:#111;
+
+    animation:fadeIn 1s ease;
+}
+
+/* FADE ANIMATION */
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* LOGO */
+
+.logo{
+    font-size:60px;
+    margin-bottom:10px;
+}
+
+/* TITLE */
+
+h1{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+/* SUBTITLE */
+
+.subtitle{
+    font-size:14px;
+    color:#444;
+    margin-bottom:25px;
+}
+
+/* INPUT BOX */
+
+.input-box{
+    margin-bottom:18px;
+}
+
+/* INPUT */
+
+input{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    background:white;
+
+    color:#111;
+
+    font-size:15px;
+
+    border:1px solid #ddd;
+
+    transition:0.3s;
+}
+
+/* PLACEHOLDER */
+
+input::placeholder{
+    color:#666;
+}
+
+/* INPUT FOCUS */
+
+input:focus{
+    transform:scale(1.02);
+    border-color:#2563eb;
+}
+
+/* BUTTON SECTION */
+
+.buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:15px;
+}
+
+/* BUTTON */
+
+button{
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+
+    color:white;
+}
+
+/* SHORTEN BUTTON */
+
+.shorten-btn{
+    background:linear-gradient(135deg,#00c6ff,#0072ff);
+}
+
+/* COPY BUTTON */
+
+.copy-btn{
+    background:black;
+}
+
+/* STATS BUTTON */
+
+.stats-btn{
+
+    width:100%;
+
+    margin-top:12px;
+
+    background:linear-gradient(135deg,#11998e,#38ef7d);
+}
+
+/* BUTTON HOVER */
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+
+/* RESULT BOX */
+
+#result{
+
+    margin-top:22px;
+
+    padding:15px;
+
+    border-radius:14px;
+
+    background:white;
+
+    word-wrap:break-word;
+
+    font-size:15px;
+
+    color:#111;
+}
+
+/* RESULT LINK */
+
+#result a{
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-weight:600;
+}
+
+#result a:hover{
+    text-decoration:underline;
+}
+
+/* FOOTER */
+
+.footer{
+    margin-top:18px;
+    font-size:12px;
+    color:#444;
+}
+
+</style>
 </head>
 
 <body>
 
-    <div class="container">
+<!-- BACKGROUND SHAPES -->
 
-        <h1>URL Shortener simple</h1>
+<div class="circle1"></div>
+<div class="circle2"></div>
+
+<!-- MAIN CONTAINER -->
+
+<div class="container">
+
+    <div class="logo">🔗</div>
+
+    <h1>URL Shortener</h1>
+
+    <p class="subtitle">
+        Convert long URLs into short beautiful links instantly
+    </p>
+
+    <!-- URL INPUT -->
+
+    <div class="input-box">
 
         <input
-            type="text"
-            id="longUrl"
-            placeholder="Enter long URL"
-        >
-
-        <button onclick="shortenUrl()">
-            Shorten URL
-        </button>
-
-        <div id="result"></div>
+        type="text"
+        id="url"
+        placeholder="Enter your long URL">
 
     </div>
 
-    <script src="script.js"></script>
+    <!-- CUSTOM NAME -->
+
+    <div class="input-box">
+
+        <input
+        type="text"
+        id="custom"
+        placeholder="Custom short name (optional)">
+
+    </div>
+
+    <!-- BUTTONS -->
+
+    <div class="buttons">
+
+        <button
+        class="shorten-btn"
+        onclick="shorten()">
+
+        Shorten
+
+        </button>
+
+        <button
+        class="copy-btn"
+        onclick="copyURL()">
+
+        Copy
+
+        </button>
+
+    </div>
+
+    <!-- STATS BUTTON -->
+
+    <button
+    class="stats-btn"
+    onclick="showStats()">
+
+    Check Clicks
+
+    </button>
+
+    <!-- RESULT -->
+
+    <div id="result">
+
+        Your shortened URL will appear here
+
+    </div>
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+      
+
+    </div>
+
+</div>
+
+<script>
+
+let latestURL = "";
+
+/* SHORTEN URL */
+
+async function shorten(){
+
+    let url =
+    document.getElementById("url").value;
+
+    let custom =
+    document.getElementById("custom").value;
+
+    if(!url.startsWith("http")){
+
+        alert("Please enter valid URL");
+
+        return;
+    }
+
+    let res = await fetch('/shorten',{
+
+        method:'POST',
+
+        headers:{
+            'Content-Type':'application/json'
+        },
+
+        body:JSON.stringify({
+            url,
+            custom
+        })
+
+    });
+
+    let data = await res.json();
+
+    if(data.error){
+
+        alert(data.error);
+
+        return;
+    }
+
+    latestURL = data.shortUrl;
+
+    document.getElementById("result").innerHTML =
+
+    "<a href='" +
+    data.shortUrl +
+    "' target='_blank'>" +
+
+    data.shortUrl +
+
+    "</a>";
+}
+
+/* COPY URL */
+
+function copyURL(){
+
+    if(!latestURL){
+
+        alert("Create URL first");
+
+        return;
+    }
+
+    navigator.clipboard.writeText(latestURL);
+
+    alert("Copied Successfully!");
+}
+
+/* SHOW STATS */
+
+async function showStats(){
+
+    if(!latestURL){
+
+        alert("Create URL first");
+
+        return;
+    }
+
+    let id =
+    latestURL.split("/").pop();
+
+    let res =
+    await fetch('/stats/' + id);
+
+    let data =
+    await res.json();
+
+    alert("Total Clicks : " + data.clicks);
+}
+
+</script>
 
 </body>
-
 </html>
